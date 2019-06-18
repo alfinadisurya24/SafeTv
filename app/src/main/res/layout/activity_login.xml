@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Login">
+
+
+    <ImageView
+        android:layout_width="610dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="-30dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitXY"
+        android:src="@drawable/login" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="50dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/email" />
+    <EditText
+        android:id="@+id/etemail"
+        android:layout_width="380dp"
+        android:layout_height="30dp"
+        android:background="@drawable/round"
+        android:inputType="textEmailAddress"
+        android:layout_marginLeft="50dp"
+        android:paddingLeft="15dp"
+        android:scaleType="fitXY"
+        android:hint="Masukkan Email" />
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="50dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/pass" />
+    <EditText
+        android:id="@+id/etpass"
+        android:layout_width="380dp"
+        android:layout_height="30dp"
+        android:background="@drawable/round"
+        android:inputType="textPassword"
+        android:paddingLeft="15dp"
+        android:layout_marginLeft="50dp"
+        android:scaleType="fitXY"
+        android:hint="Masukkan password" />
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="-40dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitXY"
+        android:src="@drawable/bpa" />
+    <ImageView
+        android:id="@+id/daftar"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="-20dp"
+        android:layout_marginLeft="50dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitXY"
+        android:src="@drawable/daftar" />
+    <ImageView
+        android:id="@+id/masuk"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitXY"
+        android:src="@drawable/masuk" />
+
+
+
+</LinearLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ListviewHome">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+        <ImageView
+            android:id="@+id/thumbnail"
+            android:layout_width="489dp"
+            android:layout_height="340dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/oreki" />
+        <ImageView
+            android:id="@+id/akun"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_below="@+id/thumbnail"
+            android:src="@drawable/ic_launcher_background"/>
+        <TextView
+            android:id="@+id/judul"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/akun"
+            android:layout_below="@+id/thumbnail"
+            android:layout_marginTop="20dp"
+            android:textSize="18dp"
+            android:text="Judul"
+            android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/namaakun"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@+id/akun"
+            android:layout_below="@+id/judul"
+            android:layout_marginTop="5dp"
+            android:textSize="13dp"
+            android:text="Nama Akun"
+            android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/pengunjung"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@+id/akun"
+            android:layout_below="@+id/namaakun"
+            android:textSize="13dp"
+            android:text="Pengunjung"
+            android:textColor="@color/black"/>
+        <TextView
+            android:id="@+id/waktu"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@+id/akun"
+            android:layout_below="@+id/pengunjung"
+            android:textSize="13dp"
+            android:text="Waktu"
+            android:textColor="@color/black"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
