@@ -23,14 +23,14 @@ public class SessionManager {
 
     public SessionManager(Context context){
         this.context = context;
-        sharedPreferences = context.getSharedPreferences("LOGIN", PRIVATE_MODE);
+        sharedPreferences = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = sharedPreferences.edit();
     }
 
     public void createSession(String nama, String email){
-        editor.putBoolean("LOGIN", true);
-        editor.putString("NAMA", nama);
-        editor.putString("EMAIL", email);
+        editor.putBoolean(LOGIN, true);
+        editor.putString(NAMA, nama);
+        editor.putString(EMAIL, email);
         editor.apply();
     }
 
@@ -42,6 +42,7 @@ public class SessionManager {
         if (!this.isLogin()){
             Intent i = new Intent(context, Login.class);
             context.startActivity(i);
+            ((Home) context).finish();
         }
     }
 
@@ -58,6 +59,6 @@ public class SessionManager {
         editor.commit();
         Intent i = new Intent(context, Login.class);
         context.startActivity(i);
-        ((Home) context).finish();
+        ((Saya) context).finish();
     }
 }

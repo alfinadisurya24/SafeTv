@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class Saya extends AppCompatActivity {
     private TextView namaakun;
-    private ImageView logout;
+    private ImageView logout,beranda;
     SessionManager sessionManager;
 
 
@@ -21,15 +21,22 @@ public class Saya extends AppCompatActivity {
         setContentView(R.layout.activity_saya);
 
         sessionManager = new SessionManager(this);
-        sessionManager.checkLogin();
 
         logout = findViewById(R.id.logout);
         namaakun = findViewById(R.id.nama);
+        beranda = findViewById(R.id.beranda);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         String mNama = user.get(sessionManager.NAMA);
 
         namaakun.setText(mNama);
+
+        beranda.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Saya.this, Home.class));
+            }
+        });
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

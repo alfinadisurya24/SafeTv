@@ -94,7 +94,7 @@
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:layout_weight="1.2"
-            android:src="@drawable/berandaon"/>
+            android:src="@drawable/berandaoff"/>
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -105,7 +105,7 @@
             android:layout_width="80dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:src="@drawable/sayaoff"/>
+            android:src="@drawable/sayaon"/>
     </LinearLayout>
 
 </LinearLayout>

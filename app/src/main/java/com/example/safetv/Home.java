@@ -9,11 +9,15 @@ import android.widget.ImageView;
 
 public class Home extends AppCompatActivity {
     private ImageView saya;
+    private SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        sessionManager = new SessionManager(this);
+        sessionManager.checkLogin();
 
         saya = findViewById(R.id.saya);
         saya.setOnClickListener(new View.OnClickListener() {
