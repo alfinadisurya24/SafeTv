@@ -81,8 +81,9 @@ public class Login extends AppCompatActivity {
 
                             String nama = object.getString("nama").trim();
                             String email = object.getString("email").trim();
+                            String id = object.getString("id").trim();
 
-                            sessionManager.createSession(nama, email);
+                            sessionManager.createSession(nama, email, id);
 
                             Intent intent = new Intent(Login.this, Home.class);
                             intent.putExtra("namaakun", nama);
