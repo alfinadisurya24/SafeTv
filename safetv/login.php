@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
     require_once 'connect.php';
 
-    $sql = "SELECT * FROM user where email='$email' ";
+    $sql = "SELECT * FROM user WHERE email='$email' ";
 
     $response = mysqli_query($conn, $sql);
 
@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
        if (password_verify($password, $row['password']) ) {
            $index['nama'] = $row['nama'];
            $index['email'] = $row['email'];
+           $index['id'] = $row['id'];
 
            array_push($result['login'], $index);
 
