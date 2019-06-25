@@ -30,24 +30,30 @@
             android:layout_marginRight="30dp"
             android:src="@drawable/save"/>
     </LinearLayout>
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:src="@drawable/foto" />
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit Photo"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/colorAccent"
         android:layout_gravity="center_horizontal"
-        android:textSize="15dp"/>
+        android:layout_marginTop="20dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/foto" />
+        <ImageView
+            android:id="@+id/edit_foto"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/edit_foto"/>
+    </LinearLayout>
+
     <EditText
         android:id="@+id/nama"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Nama"
-        android:layout_marginTop="-10dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/white"
         android:layout_gravity="center"
         android:textSize="30dp"/>
@@ -96,7 +102,7 @@
     <ImageView
         android:layout_width="500dp"
         android:layout_height="30dp"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="110dp"
         android:src="@drawable/garis"/>
     <LinearLayout
         android:layout_width="match_parent"

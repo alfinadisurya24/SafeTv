@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.safetv">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,9 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Saya"></activity>
+        <activity android:name=".kategori"></activity>
+        <activity android:name=".Unggah" />
+        <activity android:name=".Saya" />
         <activity android:name=".ListviewHome" />
-        <activity android:name=".Home"></activity>
+        <activity android:name=".Home" />
         <activity android:name=".Daftar" />
         <activity android:name=".Login" />
         <activity android:name=".PertamaSplash">

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Home">
+    tools:context=".kategori"
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="500dp"
@@ -42,16 +42,47 @@
         android:layout_width="240dp"
         android:layout_height="30dp"
         android:layout_marginTop="-5dp"
+        android:layout_gravity="right"
         android:src="@drawable/garis"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="-10dp">
+        <ImageView
+            android:id="@+id/goOlahraga"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/panah"/>
+        <ImageView
+            android:id="@+id/goMotivasi"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/motivation"
+            android:layout_marginLeft="15dp"/>
+        <ImageView
+            android:id="@+id/goWawasan"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/wawasan"
+            android:layout_marginLeft="15dp"/>
+        <ImageView
+            android:id="@+id/goHiburan"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/hiburan"
+            android:layout_marginLeft="15dp"/>
+    </LinearLayout>
     <ListView
         android:id="@+id/listview"
         android:layout_width="400dp"
         android:layout_gravity="center_horizontal"
-        android:layout_height="590dp"></ListView>
+        android:layout_height="550dp"
+        android:layout_marginTop="10dp"></ListView>
     <ImageView
         android:layout_width="500dp"
         android:layout_height="30dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="5dp"
         android:src="@drawable/garis"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -74,4 +105,5 @@
             android:layout_weight="1"
             android:src="@drawable/sayaoff"/>
     </LinearLayout>
+
 </LinearLayout>

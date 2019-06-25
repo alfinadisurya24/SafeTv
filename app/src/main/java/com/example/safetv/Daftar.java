@@ -51,50 +51,50 @@ public class Daftar extends AppCompatActivity {
         });
     }
         private void Regist() {
-            loading.setVisibility(View.VISIBLE);
-            daftar.setVisibility(View.GONE);
+        loading.setVisibility(View.VISIBLE);
+        daftar.setVisibility(View.GONE);
 
-            final String password = this.password.getText().toString().trim();
-            final String email = this.email.getText().toString().trim();
-            final String nama = this.nama.getText().toString().trim();
+        final String password = this.password.getText().toString().trim();
+        final String email = this.email.getText().toString().trim();
+        final String nama = this.nama.getText().toString().trim();
 
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        String success = jsonObject.getString("success");
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
 
-                        if (success.equals("1")){
-                            Toast.makeText(Daftar.this,"Daftar Sukses", Toast.LENGTH_SHORT).show();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        Toast.makeText(Daftar.this,"Daftar Gagal " + e.toString(), Toast.LENGTH_SHORT).show();
+                    if (success.equals("1")){
+                        Toast.makeText(Daftar.this,"Daftar Sukses", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(Daftar.this,"Daftar Gagal " + e.toString(), Toast.LENGTH_SHORT).show();
+                    loading.setVisibility(View.GONE);
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(Daftar.this,"Daftar Gagal " + error.toString(), Toast.LENGTH_SHORT).show();
                         loading.setVisibility(View.GONE);
                     }
-                }
-                },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(Daftar.this,"Daftar Gagal " + error.toString(), Toast.LENGTH_SHORT).show();
-                            loading.setVisibility(View.GONE);
-                        }
-                    })
+                })
 
-            {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params =  new HashMap<>();
-                    params.put("password", password);
-                    params.put("email", email);
-                    params.put("nama", nama);
-                    return params;
-                }
-            };
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-            requestQueue.add(stringRequest);
-        }
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params =  new HashMap<>();
+                params.put("password", password);
+                params.put("email", email);
+                params.put("nama", nama);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
     }
 
