@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 
 public class Home extends AppCompatActivity {
-    private ImageView saya;
+    private ImageView saya,kategori;
     private SessionManager sessionManager;
 
     @Override
@@ -20,10 +20,20 @@ public class Home extends AppCompatActivity {
         sessionManager.checkLogin();
 
         saya = findViewById(R.id.saya);
+        kategori = findViewById(R.id.kategori);
+
         saya.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent go = new Intent(Home.this, Saya.class);
+                startActivity(go);
+            }
+        });
+
+        kategori.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent go = new Intent(Home.this, kategori.class);
                 startActivity(go);
             }
         });

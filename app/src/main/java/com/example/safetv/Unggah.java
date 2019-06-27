@@ -50,16 +50,20 @@ import java.util.UUID;
 
 public class Unggah extends AppCompatActivity {
 
-    private static final String TAG = Unggah.class.getSimpleName();
     private static String URL_UPLOADS = "http://192.168.5.31/safetv/upload_video.php";
     private static final int IMAGE_REQUEST=2;
+    private static final int VIDEO_REQUEST=1;
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private EditText editjudul;
+    private TextView textView;
     private ImageView upload,thumbnail,video,img_thumbnail;
     private Bitmap bitmap;
     private Uri filePath;
+    private String selectedPath;
     public static final String UPLOAD_KEY = "thumbnail";
+    SessionManager sessionManager;
+    String getId;
 
 
 
@@ -68,11 +72,18 @@ public class Unggah extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unggah);
 
+        sessionManager = new SessionManager(this);
+
         radioGroup = findViewById(R.id.radiogroup);
         thumbnail = findViewById(R.id.c_thumbnail);
         img_thumbnail = findViewById(R.id.img_thumbnail);
         upload = findViewById(R.id.upload);
         editjudul = findViewById(R.id.etjudul);
+        textView = findViewById(R.id.textView);
+        video = findViewById(R.id.c_video);
+
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        getId = user.get(sessionManager.ID);
 
         thumbnail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,10 +91,17 @@ public class Unggah extends AppCompatActivity {
                 chooseFile();
             }
         });
+        video.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseVideo();
+            }
+        });
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UploadThumbnail();
+                startActivity(new Intent(Unggah.this, Home.class));
             }
         });
 
@@ -103,6 +121,13 @@ public class Unggah extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), IMAGE_REQUEST);
     }
 
+    private void chooseVideo() {
+        Intent intent = new Intent();
+        intent.setType("video/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select a Video "), VIDEO_REQUEST);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -116,6 +141,30 @@ public class Unggah extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        else if (resultCode == RESULT_OK) {
+            if (requestCode == VIDEO_REQUEST) {
+                Uri selectedImageUri = data.getData();
+                selectedPath = getPath(selectedImageUri);
+                textView.setText(selectedPath);
+            }
+        }
+    }
+
+    public String getPath(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor.close();
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
+        cursor.close();
+
+        return path;
     }
 
     private void UploadThumbnail(){
@@ -124,6 +173,7 @@ public class Unggah extends AppCompatActivity {
 
             ProgressDialog loading;
             RequestHandler rh = new RequestHandler();
+            final String user_id = getId;
 
             @Override
             protected void onPreExecute() {
@@ -143,10 +193,13 @@ public class Unggah extends AppCompatActivity {
                 Bitmap bitmap = params[0];
                 String thumbnail = getStringImage(bitmap);
 
+
+
                 HashMap<String,String> data = new HashMap<>();
 
                 int radioId = radioGroup.getCheckedRadioButtonId();
                 radioButton = findViewById(radioId);
+                data.put("user_id", user_id);
                 data.put("kategori", radioButton.getText().toString().trim());
                 data.put("judul", editjudul.getText().toString().trim());
                 data.put(UPLOAD_KEY, thumbnail);
@@ -155,9 +208,36 @@ public class Unggah extends AppCompatActivity {
                 return result;
             }
         }
-
         UploadThumbnail ui = new UploadThumbnail();
         ui.execute(bitmap);
+        uploadVideo();
+    }
+
+    private void uploadVideo(){
+        class UploadVideo extends AsyncTask<Void, Void, String> {
+
+            ProgressDialog uploading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                uploading = ProgressDialog.show(Unggah.this, "Uploading File", "Please wait...", false, false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                uploading.dismiss();
+                Toast.makeText(Unggah.this, "Sukses", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                Upload u = new Upload();
+                String msg = u.uploadVideo(selectedPath);
+                return msg;
+            }
+        }
     }
 
     public String getStringImage(Bitmap bitmap){

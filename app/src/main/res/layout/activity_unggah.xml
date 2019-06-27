@@ -32,15 +32,19 @@
         android:layout_marginLeft="30dp"
         android:src="@drawable/textthumbnail"/>
 
-    <VideoView
-        android:layout_width="420dp"
-        android:layout_height="230dp"
-        android:layout_marginTop="5dp"
-        android:layout_gravity="center"
-        android:src="@drawable/pilihvideo"/>
+    <TextView
+        android:id="@+id/textView"
+        android:hint="Lokasi Video"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
     <ImageView
+        android:id="@+id/c_video"
         android:layout_width="150dp"
         android:layout_height="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="24dp"
         android:src="@drawable/textvideo"/>
     <ImageView
@@ -54,6 +58,7 @@
         android:layout_width="420dp"
         android:layout_height="30dp"
         android:layout_gravity="center"
+        android:paddingLeft="5dp"
         android:background="@drawable/square1"/>
     <ImageView
         android:layout_width="90dp"
@@ -91,7 +96,7 @@
                 android:id="@+id/rbpengetahuan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pengetahuan"
+                android:text="Hiburan"
                 android:layout_marginLeft="10dp"
                 android:onClick="PilihKategori"/>
     </RadioGroup>
