@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SafeTv</string>
+    <string name="uploadImages">Set your image</string>
+    <string name="msg_loading">Loading...</string>
 </resources>

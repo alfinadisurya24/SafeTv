@@ -34,7 +34,6 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -43,10 +42,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Unggah extends AppCompatActivity {
 
@@ -101,6 +107,7 @@ public class Unggah extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UploadThumbnail();
+                uploadVideo();
                 startActivity(new Intent(Unggah.this, Home.class));
             }
         });
@@ -210,7 +217,7 @@ public class Unggah extends AppCompatActivity {
         }
         UploadThumbnail ui = new UploadThumbnail();
         ui.execute(bitmap);
-        uploadVideo();
+
     }
 
     private void uploadVideo(){

@@ -45,7 +45,7 @@
         android:src="@drawable/garis"/>
     <ListView
         android:id="@+id/listview"
-        android:layout_width="400dp"
+        android:layout_width="430dp"
         android:layout_gravity="center_horizontal"
         android:layout_height="590dp"></ListView>
     <ImageView

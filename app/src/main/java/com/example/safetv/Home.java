@@ -1,15 +1,46 @@
 package com.example.safetv;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.app.ProgressDialog;
+import android.widget.ListAdapter;
+
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity  {
     private ImageView saya,kategori;
     private SessionManager sessionManager;
+    private static String URLstring = "http://192.168.5.31/safetv/tampilan_home.php";
+    private ListView listView;
+    ArrayList<DataModel> dataModelArrayList;
+    private ListAdapter listAdapter;
+
+
+    ArrayList<HashMap<String, String>> list_data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +50,11 @@ public class Home extends AppCompatActivity {
         sessionManager = new SessionManager(this);
         sessionManager.checkLogin();
 
+        listView = findViewById(R.id.listview);
         saya = findViewById(R.id.saya);
         kategori = findViewById(R.id.kategori);
+
+        list_data = new ArrayList<HashMap<String, String>>();
 
         saya.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +71,68 @@ public class Home extends AppCompatActivity {
                 startActivity(go);
             }
         });
+        retrieveJSON();
+    }
+
+    private void retrieveJSON() {
+
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLstring,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.d("strrrrr", ">>" + response);
+
+                        try {
+
+                            JSONObject obj = new JSONObject(response);
+                                dataModelArrayList = new ArrayList<>();
+                                JSONArray dataArray  = obj.getJSONArray("result");
+
+                                for (int i = 0; i < dataArray.length(); i++) {
+
+                                    DataModel playerModel = new DataModel();
+                                    JSONObject dataobj = dataArray.getJSONObject(i);
+
+                                    playerModel.setJudul(dataobj.getString("judul"));
+                                    playerModel.setNamaakun(dataobj.getString("nama"));
+                                    playerModel.setThumbnailURL(dataobj.getString("thumbnail"));
+                                    playerModel.setPhotoURL(dataobj.getString("photo"));
+
+                                    dataModelArrayList.add(playerModel);
+
+
+
+                                setupListview();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //displaying the error in toast if occurrs
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        // request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        requestQueue.add(stringRequest);
+
 
     }
+
+    private void setupListview(){
+        listAdapter = new ListAdapters(this, dataModelArrayList);
+        listView.setAdapter(listAdapter);
+    }
+
 }
+
