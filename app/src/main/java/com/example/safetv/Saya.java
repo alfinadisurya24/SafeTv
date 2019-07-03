@@ -16,6 +16,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +38,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,10 +51,15 @@ public class Saya extends AppCompatActivity {
     SessionManager sessionManager;
     String getId;
     private static String URL_READ = "http://192.168.5.31/safetv/read_detail.php";
+    private static String PHOTO_URL = "http://192.168.5.31/safetv/photo_profil.php";
     private static String URL_EDIT = "http://192.168.5.31/safetv/edit_detail.php";
     private static String URL_UPLOAD = "http://192.168.5.31/safetv/upload_photo_profile.php";
+    private static String URLstring = "http://192.168.5.31/safetv/tampilan_home.php";
     private Bitmap bitmap;
     CircleImageView profile_image;
+    ArrayList<DataModel> dataModelArrayList;
+    private ListAdapter listAdapter;
+
 
 
 
@@ -71,6 +81,7 @@ public class Saya extends AppCompatActivity {
 
         save.setVisibility(View.GONE);
         cuman.setVisibility(View.GONE);
+
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(sessionManager.ID);
@@ -129,7 +140,6 @@ public class Saya extends AppCompatActivity {
         });
 
     }
-
 
 
     private void getUserDetail(){
@@ -239,6 +249,8 @@ public class Saya extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
+
+
 
     private void chooseFile(){
         Intent intent = new Intent();

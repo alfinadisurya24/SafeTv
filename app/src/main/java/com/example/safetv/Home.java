@@ -9,11 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.app.ProgressDialog;
 import android.widget.ListAdapter;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -22,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -29,6 +32,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class Home extends AppCompatActivity  {
@@ -39,9 +43,6 @@ public class Home extends AppCompatActivity  {
     ArrayList<DataModel> dataModelArrayList;
     private ListAdapter listAdapter;
 
-
-    ArrayList<HashMap<String, String>> list_data;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,11 +51,12 @@ public class Home extends AppCompatActivity  {
         sessionManager = new SessionManager(this);
         sessionManager.checkLogin();
 
+
         listView = findViewById(R.id.listview);
         saya = findViewById(R.id.saya);
         kategori = findViewById(R.id.kategori);
 
-        list_data = new ArrayList<HashMap<String, String>>();
+
 
         saya.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +74,7 @@ public class Home extends AppCompatActivity  {
             }
         });
         retrieveJSON();
+
     }
 
     private void retrieveJSON() {
@@ -128,11 +131,12 @@ public class Home extends AppCompatActivity  {
 
 
     }
-
+//
     private void setupListview(){
         listAdapter = new ListAdapters(this, dataModelArrayList);
         listView.setAdapter(listAdapter);
     }
+
 
 }
 

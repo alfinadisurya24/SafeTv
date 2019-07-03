@@ -14,8 +14,8 @@
         android:id="@+id/getvideo"
         android:layout_width="500dp"
         android:layout_height="300dp" />
-    <ImageView
-        android:id="@+id/photo_akun"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/photo_akunDetail"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -24,21 +24,21 @@
         android:layout_below="@+id/getvideo"
         android:src="@drawable/ic_launcher_background"/>
     <TextView
-        android:id="@+id/judul"
+        android:id="@+id/judulDetail"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_toRightOf="@+id/photo_akun"
+        android:layout_toRightOf="@+id/photo_akunDetail"
         android:layout_below="@+id/getvideo"
         android:layout_marginTop="20dp"
         android:textSize="18dp"
         android:text="Judul"
         android:textColor="@color/black"/>
     <TextView
-        android:id="@+id/namaakun"
+        android:id="@+id/namaakunDetail"
         android:layout_width="100dp"
         android:layout_height="20dp"
-        android:layout_toRightOf="@+id/photo_akun"
-        android:layout_below="@+id/judul"
+        android:layout_toRightOf="@+id/photo_akunDetail"
+        android:layout_below="@+id/judulDetail"
         android:layout_marginTop="5dp"
         android:textSize="13dp"
         android:text="Nama Akun"

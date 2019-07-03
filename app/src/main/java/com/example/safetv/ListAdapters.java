@@ -1,11 +1,13 @@
 package com.example.safetv;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
@@ -14,6 +16,15 @@ import java.util.ArrayList;
 public class ListAdapters extends BaseAdapter {
     private Context context;
     private ArrayList<DataModel> dataModelArrayList;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
 
     public ListAdapters(Context context, ArrayList<DataModel> dataModelArrayList) {
 
@@ -60,12 +71,27 @@ public class ListAdapters extends BaseAdapter {
             holder.imgPhoto = (ImageView) convertView.findViewById(R.id.photo_akun);
             holder.tvjudul = (TextView) convertView.findViewById(R.id.judul);
             holder.tvnama = (TextView) convertView.findViewById(R.id.namaakun);
+            holder.home = (LinearLayout) convertView.findViewById(R.id.listhome);
 
             convertView.setTag(holder);
         }else {
-            // the getTag returns the viewHolder object set as a tag to the view
+
             holder = (ViewHolder)convertView.getTag();
         }
+
+        holder.home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context.getApplicationContext(), Detail.class);
+                String judulKey = ((TextView) v.findViewById(R.id.judul)).getText().toString();
+                String namaAkunKey = ((TextView) v.findViewById(R.id.namaakun)).getText().toString();
+
+                i.putExtra("JUDUL_KEY", judulKey);
+                i.putExtra("NAMA_AKUN_KEY", namaAkunKey);
+//                i.putExtra("PHOTO_AKUN_KEY", dataModelArrayList);
+                context.startActivity(i);
+            }
+        });
 
         Picasso.get().load(dataModelArrayList.get(position).getThumbnailURL()).into(holder.imgThumbnail);
         Picasso.get().load(dataModelArrayList.get(position).getPhotoURL()).into(holder.imgPhoto);
@@ -79,5 +105,6 @@ public class ListAdapters extends BaseAdapter {
 
         protected TextView tvjudul, tvnama;
         protected ImageView imgPhoto,imgThumbnail;
+        protected LinearLayout home;
     }
 }

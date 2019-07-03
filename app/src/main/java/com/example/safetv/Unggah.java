@@ -34,10 +34,12 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -52,7 +54,6 @@ import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Unggah extends AppCompatActivity {
 
@@ -62,7 +63,7 @@ public class Unggah extends AppCompatActivity {
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private EditText editjudul;
-    private TextView textView;
+    private TextView textView,tvid;
     private ImageView upload,thumbnail,video,img_thumbnail;
     private Bitmap bitmap;
     private Uri filePath;
@@ -86,6 +87,7 @@ public class Unggah extends AppCompatActivity {
         upload = findViewById(R.id.upload);
         editjudul = findViewById(R.id.etjudul);
         textView = findViewById(R.id.textView);
+        tvid = findViewById(R.id.tvid);
         video = findViewById(R.id.c_video);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
@@ -108,7 +110,7 @@ public class Unggah extends AppCompatActivity {
             public void onClick(View v) {
                 UploadThumbnail();
                 uploadVideo();
-                startActivity(new Intent(Unggah.this, Home.class));
+                startActivity(new Intent(Unggah.this, Saya.class));
             }
         });
 
@@ -199,6 +201,7 @@ public class Unggah extends AppCompatActivity {
             protected String doInBackground(Bitmap... params) {
                 Bitmap bitmap = params[0];
                 String thumbnail = getStringImage(bitmap);
+
 
 
 
