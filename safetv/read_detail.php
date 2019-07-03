@@ -1,5 +1,6 @@
 <?php 
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
     $id = $_POST['id'];
 
     require_once 'connect.php';
@@ -28,7 +29,7 @@
             mysqli_close($conn);
         }
     }
-
+    
     }
 
 ?>

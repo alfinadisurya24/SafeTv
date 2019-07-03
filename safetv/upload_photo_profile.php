@@ -1,27 +1,24 @@
 <?php
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
-    $nama = $_POST['nama'];
     $id = $_POST['id'];
+    $photo = $_POST['photo'];
+
+    $path =  "profile_image/$id.jpeg";
+    $finalPath = "http://192.168.5.31/safetv/".$path; 
 
     require_once 'connect.php';
 
-    $sql = "UPDATE user SET nama='$nama' WHERE id='$id' ";
-    
+    $sql = "UPDATE user SET photo='$finalPath' WHERE id='$id'";
 
     if (mysqli_query($conn, $sql)) {
+        if (file_put_contents($path, base64_decode($photo))) {
         $result["success"] = "1";
         $result["message"] = "success";
 
         echo json_encode($result);
         mysqli_close($conn);
-    } else{
-        $result["success"] = "0";
-        $result["message"] = "error!";
-
-        echo json_encode($result);
-        mysqli_close($conn);
+        }
     }
 }
 ?>
