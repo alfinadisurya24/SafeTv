@@ -1,0 +1,40 @@
+<?php
+
+$path =  "thumbnail/";
+$finalPath = "http://192.168.5.31/safetv/".$path; 
+$response = array();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+    if (isset($_POST['judul']) and isset($_POST['kategori']) and isset($_FILES['thumbnail']['judul'])) {
+        $con = require_once 'connect.php';    
+        if(mysqli_connect_error($con)){
+            echo "Failed to Connect";
+        }
+
+        $judul = $_POST['judul'];
+        $kategori = $_POST['karegori'];
+        $fileinfo = pathinfo($_FILES['thumbnail']['judul']);
+        $extension = $fileinfo['extension'];
+        $file_url = $finalPath.$judul.'.'.$extension;
+        $file_path = $path.$judul.'.'.$extension;
+
+        try {
+            move_uploaded_file($_FILES['thumbnail']['tmp_judul'],$file_path);
+
+            $sql = "INSERT INTO video_user ('judul','kategori','thumbnail') VALUES ('$judul','$kategori','$file_url');";
+            if (mysqli_query($con, $sql)) {
+
+                $response['error'] = false;
+                $response['judul'] = $judul;
+                $response['kategori'] = $kategori; 
+                }
+        } catch (Exception $e) {
+            $response['error'] = true;
+            $response['message'] = $e->getMessage();
+        }
+        echo json_encode($response);
+        mysqli_close($con);
+    }   
+}
+?>
