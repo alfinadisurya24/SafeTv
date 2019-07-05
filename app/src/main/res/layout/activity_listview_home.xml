@@ -48,6 +48,15 @@
             android:textSize="13dp"
             android:text="Nama Akun"
             android:textColor="@color/colorPrimaryDark"/>
+        <TextView
+            android:id="@+id/kategori"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@+id/photo_akun"
+            android:layout_below="@+id/namaakun"
+            android:textSize="13dp"
+            android:text="Kategori"
+            android:textColor="@color/colorPrimaryDark"/>
 
     </RelativeLayout>
 

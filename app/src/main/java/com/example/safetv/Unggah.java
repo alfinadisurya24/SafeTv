@@ -150,7 +150,7 @@ public class Unggah extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        else if (resultCode == RESULT_OK) {
+        else if (resultCode == RESULT_OK && resultCode == RESULT_OK && data != null && data.getData() != null) {
             if (requestCode == VIDEO_REQUEST) {
                 Uri selectedImageUri = data.getData();
                 selectedPath = getPath(selectedImageUri);
@@ -201,8 +201,6 @@ public class Unggah extends AppCompatActivity {
             protected String doInBackground(Bitmap... params) {
                 Bitmap bitmap = params[0];
                 String thumbnail = getStringImage(bitmap);
-
-
 
 
                 HashMap<String,String> data = new HashMap<>();

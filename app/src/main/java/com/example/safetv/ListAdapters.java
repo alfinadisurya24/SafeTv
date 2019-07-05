@@ -16,15 +16,6 @@ import java.util.ArrayList;
 public class ListAdapters extends BaseAdapter {
     private Context context;
     private ArrayList<DataModel> dataModelArrayList;
-    private OnItemClickListener mListener;
-
-    public interface OnItemClickListener{
-        void onItemClick(int position);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener){
-        mListener = listener;
-    }
 
     public ListAdapters(Context context, ArrayList<DataModel> dataModelArrayList) {
 
@@ -71,6 +62,7 @@ public class ListAdapters extends BaseAdapter {
             holder.imgPhoto = (ImageView) convertView.findViewById(R.id.photo_akun);
             holder.tvjudul = (TextView) convertView.findViewById(R.id.judul);
             holder.tvnama = (TextView) convertView.findViewById(R.id.namaakun);
+            holder.tvkategori = (TextView) convertView.findViewById(R.id.kategori);
             holder.home = (LinearLayout) convertView.findViewById(R.id.listhome);
 
             convertView.setTag(holder);
@@ -85,9 +77,11 @@ public class ListAdapters extends BaseAdapter {
                 Intent i = new Intent(context.getApplicationContext(), Detail.class);
                 String judulKey = ((TextView) v.findViewById(R.id.judul)).getText().toString();
                 String namaAkunKey = ((TextView) v.findViewById(R.id.namaakun)).getText().toString();
+                String kategoriKey = ((TextView) v.findViewById(R.id.kategori)).getText().toString();
 
                 i.putExtra("JUDUL_KEY", judulKey);
                 i.putExtra("NAMA_AKUN_KEY", namaAkunKey);
+                i.putExtra("KATEGORI_KEY", kategoriKey);
 //                i.putExtra("PHOTO_AKUN_KEY", dataModelArrayList);
                 context.startActivity(i);
             }
@@ -96,6 +90,7 @@ public class ListAdapters extends BaseAdapter {
         Picasso.get().load(dataModelArrayList.get(position).getThumbnailURL()).into(holder.imgThumbnail);
         Picasso.get().load(dataModelArrayList.get(position).getPhotoURL()).into(holder.imgPhoto);
         holder.tvjudul.setText(dataModelArrayList.get(position).getJudul());
+        holder.tvkategori.setText(dataModelArrayList.get(position).getKategori());
         holder.tvnama.setText(dataModelArrayList.get(position).getNamaakun());
 
         return convertView;
@@ -103,7 +98,7 @@ public class ListAdapters extends BaseAdapter {
 
     private class ViewHolder {
 
-        protected TextView tvjudul, tvnama;
+        protected TextView tvjudul, tvnama, tvkategori;
         protected ImageView imgPhoto,imgThumbnail;
         protected LinearLayout home;
     }

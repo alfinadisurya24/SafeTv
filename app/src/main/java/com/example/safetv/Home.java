@@ -100,6 +100,7 @@ public class Home extends AppCompatActivity  {
 
                                     playerModel.setJudul(dataobj.getString("judul"));
                                     playerModel.setNamaakun(dataobj.getString("nama"));
+                                    playerModel.setKategori(dataobj.getString("kategori"));
                                     playerModel.setThumbnailURL(dataobj.getString("thumbnail"));
                                     playerModel.setPhotoURL(dataobj.getString("photo"));
 
@@ -119,19 +120,19 @@ public class Home extends AppCompatActivity  {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        //displaying the error in toast if occurrs
+
                         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
-        // request queue
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         requestQueue.add(stringRequest);
 
 
     }
-//
+
     private void setupListview(){
         listAdapter = new ListAdapters(this, dataModelArrayList);
         listView.setAdapter(listAdapter);

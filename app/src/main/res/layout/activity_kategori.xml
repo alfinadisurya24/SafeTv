@@ -48,7 +48,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="-10dp">
         <ImageView
             android:id="@+id/goOlahraga"
@@ -75,10 +75,10 @@
             android:layout_marginLeft="15dp"/>
     </LinearLayout>
     <ListView
-        android:id="@+id/listview"
-        android:layout_width="400dp"
+        android:id="@+id/listview1"
+        android:layout_width="430dp"
         android:layout_gravity="center_horizontal"
-        android:layout_height="520dp"
+        android:layout_height="525dp"
         android:layout_marginTop="10dp"></ListView>
     <ImageView
         android:layout_width="500dp"

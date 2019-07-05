@@ -14,7 +14,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Detail"></activity>
+        <activity android:name=".ListviewVideoSaya"></activity>
+        <activity android:name=".VideoSaya" />
+        <activity android:name=".Riwayat" />
+        <activity android:name=".Detail" />
         <activity android:name=".kategori" />
         <activity android:name=".Unggah" />
         <activity android:name=".Saya" />

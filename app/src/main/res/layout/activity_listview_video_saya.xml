@@ -5,49 +5,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ListViewDetail"
-    android:id="@+id/listdetail">
+    android:id="@+id/listVideoSaya"
+    android:layout_marginTop="5dp"
+    tools:context=".ListviewVideoSaya">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal">
         <ImageView
-            android:id="@+id/thumbnails"
-            android:layout_width="150dp"
-            android:layout_height="110dp"
+            android:id="@+id/thumbnails2"
+            android:layout_width="180dp"
+            android:layout_height="100dp"
             android:scaleType="fitXY"
             android:src="@drawable/oreki" />
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/photo_akuns"
+            android:id="@+id/photo_akuns2"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_toRightOf="@+id/thumbnails"
+            android:layout_toRightOf="@+id/thumbnails2"
             android:src="@drawable/ic_launcher_background"/>
         <TextView
-            android:id="@+id/juduls"
-            android:layout_width="250dp"
+            android:id="@+id/juduls2"
+            android:layout_width="150dp"
             android:layout_height="40dp"
-            android:layout_toRightOf="@+id/photo_akuns"
+            android:layout_toRightOf="@+id/photo_akuns2"
             android:layout_marginTop="10dp"
-            android:textSize="18dp"
+            android:textSize="13dp"
             android:text="Judul"
             android:textColor="@color/black"/>
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_toRightOf="@id/juduls2"
+            android:layout_marginTop="80dp"
+            android:src="@mipmap/trash"/>
         <TextView
-            android:id="@+id/namaakuns"
+            android:id="@+id/namaakuns2"
             android:layout_width="100dp"
             android:layout_height="20dp"
-            android:layout_toRightOf="@+id/photo_akuns"
-            android:layout_below="@+id/juduls"
+            android:layout_toRightOf="@+id/photo_akuns2"
+            android:layout_below="@+id/juduls2"
             android:layout_marginTop="5dp"
-            android:textSize="13dp"
+            android:textSize="10dp"
+            android:text="Nama Akun"
+            android:textColor="@color/colorPrimaryDark"/>
+        <TextView
+            android:id="@+id/kategori2"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@+id/photo_akuns2"
+            android:layout_below="@+id/namaakuns2"
+            android:layout_marginTop="-5dp"
+            android:textSize="10dp"
             android:text="Nama Akun"
             android:textColor="@color/colorPrimaryDark"/>
 
     </RelativeLayout>
-
-
 </LinearLayout>

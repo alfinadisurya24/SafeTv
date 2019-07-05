@@ -13,13 +13,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -29,7 +24,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -38,7 +32,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,19 +40,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Saya extends AppCompatActivity {
     private static final String TAG = Saya.class.getSimpleName();
     private EditText nama;
-    private ImageView unggah,logout,cuman,beranda,save,edit;
+    private ImageView unggah,logout,cuman,beranda,save,edit,riwayatgo,videoSayago;
     SessionManager sessionManager;
     String getId;
     private static String URL_READ = "http://192.168.5.31/safetv/read_detail.php";
-    private static String PHOTO_URL = "http://192.168.5.31/safetv/photo_profil.php";
     private static String URL_EDIT = "http://192.168.5.31/safetv/edit_detail.php";
     private static String URL_UPLOAD = "http://192.168.5.31/safetv/upload_photo_profile.php";
-    private static String URLstring = "http://192.168.5.31/safetv/tampilan_home.php";
     private Bitmap bitmap;
     CircleImageView profile_image;
-    ArrayList<DataModel> dataModelArrayList;
-    private ListAdapter listAdapter;
-
 
 
 
@@ -78,6 +66,8 @@ public class Saya extends AppCompatActivity {
         profile_image = findViewById(R.id.profile_image);
         unggah = findViewById(R.id.unggah);
         cuman = findViewById(R.id.edit_foto);
+        riwayatgo =  findViewById(R.id.riwayat);
+        videoSayago =  findViewById(R.id.videosaya);
 
         save.setVisibility(View.GONE);
         cuman.setVisibility(View.GONE);
@@ -85,6 +75,20 @@ public class Saya extends AppCompatActivity {
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(sessionManager.ID);
+
+        videoSayago.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Saya.this, VideoSaya.class));
+            }
+        });
+
+        riwayatgo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Saya.this, Riwayat.class));
+            }
+        });
 
         cuman.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +146,7 @@ public class Saya extends AppCompatActivity {
     }
 
 
+
     private void getUserDetail(){
         final ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Loading . . .");
@@ -164,8 +169,9 @@ public class Saya extends AppCompatActivity {
                                     JSONObject object = jsonArray.getJSONObject(i);
 
                                     String strnama = object.getString("nama").trim();
+                                    String strphoto = object.getString("photo").trim();
 
-
+                                    Picasso.get().load(strphoto).into(profile_image);
                                     nama.setText(strnama);
                                 }
                             }
