@@ -1,7 +1,7 @@
 package com.example.safetv;
 
 public class DataModel {
-    private String judul,kategori, thumbnailURL, namaakun,  photoURL;
+    private String judul,kategori, thumbnailURL, namaakun,  photoURL, videoURL;
 
 //    public DataModel(){};
 //
@@ -50,6 +50,14 @@ public class DataModel {
 
     public void setPhotoURL(String photoURL){
         this.photoURL = photoURL;
+    }
+
+    public String getVideoURL(){
+        return videoURL;
+    }
+
+    public void setVideoURL(String videoURL){
+        this.videoURL = videoURL;
     }
 
 

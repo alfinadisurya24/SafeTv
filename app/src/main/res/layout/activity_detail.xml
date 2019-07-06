@@ -10,10 +10,15 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+        <FrameLayout
+            android:id="@+id/frames"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
     <VideoView
         android:id="@+id/getvideo"
         android:layout_width="500dp"
         android:layout_height="300dp" />
+        </FrameLayout>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/photo_akunDetail"
         android:layout_width="50dp"
@@ -21,14 +26,14 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="20dp"
-        android:layout_below="@+id/getvideo"
+        android:layout_below="@+id/frames"
         android:src="@drawable/ic_launcher_background"/>
     <TextView
         android:id="@+id/judulDetail"
         android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_toRightOf="@+id/photo_akunDetail"
-        android:layout_below="@+id/getvideo"
+        android:layout_below="@+id/frames"
         android:layout_marginTop="20dp"
         android:textSize="18dp"
         android:text="Judul"
@@ -54,7 +59,7 @@
             android:textColor="@color/colorPrimaryDark"/>
     </RelativeLayout>
     <ListView
-        android:id="@+id/listview"
+        android:id="@+id/listview6"
         android:layout_width="420dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"

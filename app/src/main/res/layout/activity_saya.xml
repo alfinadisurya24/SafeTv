@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="10dp">
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/profile_image"
             android:layout_width="200dp"
@@ -102,7 +102,7 @@
     <ImageView
         android:layout_width="500dp"
         android:layout_height="30dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="120dp"
         android:src="@drawable/garis"/>
     <LinearLayout
         android:layout_width="match_parent"

@@ -37,6 +37,7 @@ import java.util.List;
 
 public class Home extends AppCompatActivity  {
     private ImageView saya,kategori;
+    private String photo_akun_detail;
     private SessionManager sessionManager;
     private static String URLstring = "http://192.168.5.31/safetv/tampilan_home.php";
     private ListView listView;
@@ -54,7 +55,7 @@ public class Home extends AppCompatActivity  {
 
         listView = findViewById(R.id.listview);
         saya = findViewById(R.id.saya);
-        kategori = findViewById(R.id.kategori);
+        kategori = findViewById(R.id.kategorihome);
 
 
 
@@ -74,7 +75,6 @@ public class Home extends AppCompatActivity  {
             }
         });
         retrieveJSON();
-
     }
 
     private void retrieveJSON() {
@@ -103,10 +103,10 @@ public class Home extends AppCompatActivity  {
                                     playerModel.setKategori(dataobj.getString("kategori"));
                                     playerModel.setThumbnailURL(dataobj.getString("thumbnail"));
                                     playerModel.setPhotoURL(dataobj.getString("photo"));
+                                    playerModel.setVideoURL(dataobj.getString("video"));
+
 
                                     dataModelArrayList.add(playerModel);
-
-
 
                                 setupListview();
 

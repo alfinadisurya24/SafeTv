@@ -62,29 +62,12 @@ public class ListAdapters1 extends BaseAdapter {
             holder.tvjudul2 = (TextView) convertView.findViewById(R.id.juduls2);
             holder.tvnama2 = (TextView) convertView.findViewById(R.id.namaakuns2);
             holder.tvkategori2 = (TextView) convertView.findViewById(R.id.kategori2);
-//            holder.lVideo_saya = (LinearLayout) convertView.findViewById(R.id.listVideoSaya);
 
             convertView.setTag(holder);
         }else {
 
             holder = (ListAdapters1.ViewHolder)convertView.getTag();
         }
-
-//        holder.lVideo_saya.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent i = new Intent(context.getApplicationContext(), Detail.class);
-//                String judulKey = ((TextView) v.findViewById(R.id.judul)).getText().toString();
-//                String namaAkunKey = ((TextView) v.findViewById(R.id.namaakun)).getText().toString();
-//                String kategoriKey = ((TextView) v.findViewById(R.id.kategori)).getText().toString();
-//
-//                i.putExtra("JUDUL_KEY", judulKey);
-//                i.putExtra("NAMA_AKUN_KEY", namaAkunKey);
-//                i.putExtra("KATEGORI_KEY", kategoriKey);
-////                i.putExtra("PHOTO_AKUN_KEY", dataModelArrayList);
-//                context.startActivity(i);
-//            }
-//        });
 
         Picasso.get().load(dataModelArrayList.get(position).getThumbnailURL()).into(holder.imgThumbnail2);
         Picasso.get().load(dataModelArrayList.get(position).getPhotoURL()).into(holder.imgPhoto2);
@@ -99,6 +82,5 @@ public class ListAdapters1 extends BaseAdapter {
 
         protected TextView tvjudul2, tvnama2, tvkategori2;
         protected ImageView imgPhoto2,imgThumbnail2;
-        protected LinearLayout lVideo_saya;
     }
 }

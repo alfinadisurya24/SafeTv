@@ -1,8 +1,15 @@
 package com.example.safetv;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -27,11 +34,14 @@ import java.util.Map;
 public class VideoSaya extends AppCompatActivity {
 
     private static String URLstring = "http://192.168.5.31/safetv/video_saya.php";
+    private static String URLDelete = "http://192.168.5.31/safetv/delete_video_saya.php";
     private ListView listView2;
     ArrayList<DataModel> dataModelArrayList2;
     private ListAdapter listAdapter2;
     private SessionManager sessionManager;
+    private ImageView deleteVideoSaya;
     String getId;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +49,74 @@ public class VideoSaya extends AppCompatActivity {
         setContentView(R.layout.activity_video_saya);
 
         listView2 = findViewById(R.id.listview2);
+        deleteVideoSaya = findViewById(R.id.deleteVIdeoSaya);
         sessionManager = new SessionManager(this);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(sessionManager.ID);
 
         retrieveJSON();
+
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                confirmDeleteVideo();
+            }
+        });
+
+    }
+
+    private void deleteVideo() {
+        class deleteVideo extends AsyncTask<Void,Void,String> {
+            ProgressDialog loading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(VideoSaya.this, "Updating...", "Tunggu...", false, false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(VideoSaya.this, s, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                RequestHandler rh = new RequestHandler();
+                String s = rh.sendGetRequestParam(URLDelete, id);
+                return s;
+            }
+        }
+
+        deleteVideo de = new deleteVideo();
+        de.execute();
+    }
+
+    private void confirmDeleteVideo(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Apakah Kamu Yakin Ingin Menghapus Pegawai ini?");
+
+        alertDialogBuilder.setPositiveButton("Ya",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        deleteVideo();
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("Tidak",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void retrieveJSON() {

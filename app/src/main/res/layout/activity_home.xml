@@ -32,7 +32,7 @@
             android:layout_weight="0.5"
             android:src="@drawable/video"/>
         <ImageView
-            android:id="@+id/kategori"
+            android:id="@+id/kategorihome"
             android:layout_width="80dp"
             android:layout_height="30dp"
             android:layout_weight="0.5"

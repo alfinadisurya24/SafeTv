@@ -2,13 +2,17 @@ package com.example.safetv;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
+
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
@@ -49,7 +53,7 @@ public class ListAdapters extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
         if (convertView == null) {
@@ -78,20 +82,29 @@ public class ListAdapters extends BaseAdapter {
                 String judulKey = ((TextView) v.findViewById(R.id.judul)).getText().toString();
                 String namaAkunKey = ((TextView) v.findViewById(R.id.namaakun)).getText().toString();
                 String kategoriKey = ((TextView) v.findViewById(R.id.kategori)).getText().toString();
+                String photoAkunKey = dataModelArrayList.get(position).getPhotoURL();
+                String videoKey = dataModelArrayList.get(position).getVideoURL();
 
                 i.putExtra("JUDUL_KEY", judulKey);
                 i.putExtra("NAMA_AKUN_KEY", namaAkunKey);
                 i.putExtra("KATEGORI_KEY", kategoriKey);
-//                i.putExtra("PHOTO_AKUN_KEY", dataModelArrayList);
+                i.putExtra("PHOTO_AKUN_KEY", photoAkunKey);
+                i.putExtra("VIDEO_KEY", videoKey);
                 context.startActivity(i);
             }
         });
+
 
         Picasso.get().load(dataModelArrayList.get(position).getThumbnailURL()).into(holder.imgThumbnail);
         Picasso.get().load(dataModelArrayList.get(position).getPhotoURL()).into(holder.imgPhoto);
         holder.tvjudul.setText(dataModelArrayList.get(position).getJudul());
         holder.tvkategori.setText(dataModelArrayList.get(position).getKategori());
         holder.tvnama.setText(dataModelArrayList.get(position).getNamaakun());
+
+        holder.mediacontroller3 = new MediaController(context.getApplicationContext());
+        holder.mediacontroller3.setAnchorView(holder.tampilVideo);
+        String uriPath = dataModelArrayList.get(position).getVideoURL();
+        holder.uri3 = Uri.parse(uriPath);
 
         return convertView;
     }
@@ -101,5 +114,9 @@ public class ListAdapters extends BaseAdapter {
         protected TextView tvjudul, tvnama, tvkategori;
         protected ImageView imgPhoto,imgThumbnail;
         protected LinearLayout home;
+        protected VideoView tampilVideo;
+        private MediaController mediacontroller3;
+        private Uri uri3;
+
     }
 }

@@ -38,6 +38,7 @@
             android:text="Judul"
             android:textColor="@color/black"/>
         <ImageView
+            android:id="@+id/deleteVIdeoSaya"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_toRightOf="@id/juduls2"
