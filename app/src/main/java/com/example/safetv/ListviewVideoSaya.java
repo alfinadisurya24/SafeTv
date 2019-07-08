@@ -21,7 +21,7 @@ public class ListviewVideoSaya extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listview_video_saya);
 
-        deleteVideoSaya = findViewById(R.id.deleteVIdeoSaya);
+//        deleteVideoSaya = findViewById(R.id.deleteVIdeoSaya);
     }
 
 }

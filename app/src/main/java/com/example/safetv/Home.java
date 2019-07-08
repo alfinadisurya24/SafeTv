@@ -58,7 +58,6 @@ public class Home extends AppCompatActivity  {
         kategori = findViewById(R.id.kategorihome);
 
 
-
         saya.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

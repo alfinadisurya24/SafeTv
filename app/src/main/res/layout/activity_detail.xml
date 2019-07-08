@@ -17,7 +17,7 @@
     <VideoView
         android:id="@+id/getvideo"
         android:layout_width="500dp"
-        android:layout_height="300dp" />
+        android:layout_height="280dp" />
         </FrameLayout>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/photo_akunDetail"
@@ -60,10 +60,10 @@
     </RelativeLayout>
     <ListView
         android:id="@+id/listview6"
-        android:layout_width="420dp"
+        android:layout_width="450dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
-        android:layout_height="310dp"></ListView>
+        android:layout_height="335dp"></ListView>
     <ImageView
         android:layout_width="500dp"
         android:layout_height="30dp"
@@ -77,7 +77,7 @@
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:layout_weight="1.2"
-            android:src="@drawable/berandaon"/>
+            android:src="@drawable/berandaoff"/>
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"

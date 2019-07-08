@@ -14,14 +14,14 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
-
-public class ListAdapters extends BaseAdapter {
+public class ListAdapter2 extends BaseAdapter {
     private Context context;
     private ArrayList<DataModel> dataModelArrayList;
 
-    public ListAdapters(Context context, ArrayList<DataModel> dataModelArrayList) {
+    public ListAdapter2(Context context, ArrayList<DataModel> dataModelArrayList) {
 
         this.context = context;
         this.dataModelArrayList = dataModelArrayList;
@@ -54,34 +54,34 @@ public class ListAdapters extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        ListAdapter2.ViewHolder holder;
 
         if (convertView == null) {
-            holder = new ViewHolder();
+            holder = new ListAdapter2.ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.activity_listview_home, null, true);
+            convertView = inflater.inflate(R.layout.activity_listview_detail, null, true);
 
-            holder.imgThumbnail = (ImageView) convertView.findViewById(R.id.thumbnail);
-            holder.imgPhoto = (ImageView) convertView.findViewById(R.id.photo_akun);
-            holder.tvjudul = (TextView) convertView.findViewById(R.id.judul);
-            holder.tvnama = (TextView) convertView.findViewById(R.id.namaakun);
-            holder.tvkategori = (TextView) convertView.findViewById(R.id.kategori);
-            holder.home = (LinearLayout) convertView.findViewById(R.id.listhome);
+            holder.imgThumbnail5 = (ImageView) convertView.findViewById(R.id.thumbnails);
+            holder.imgPhoto5 = (ImageView) convertView.findViewById(R.id.photo_akuns);
+            holder.tvjudul5 = (TextView) convertView.findViewById(R.id.juduls);
+            holder.tvnama5 = (TextView) convertView.findViewById(R.id.namaakuns);
+            holder.tvkategori5 = (TextView) convertView.findViewById(R.id.kategoris);
+            holder.detail = (LinearLayout) convertView.findViewById(R.id.listdetail);
 
             convertView.setTag(holder);
         }else {
 
-            holder = (ViewHolder)convertView.getTag();
+            holder = (ListAdapter2.ViewHolder)convertView.getTag();
         }
 
-        holder.home.setOnClickListener(new View.OnClickListener() {
+        holder.detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(context.getApplicationContext(), Detail.class);
-                String judulKey = ((TextView) v.findViewById(R.id.judul)).getText().toString();
-                String namaAkunKey = ((TextView) v.findViewById(R.id.namaakun)).getText().toString();
-                String kategoriKey = ((TextView) v.findViewById(R.id.kategori)).getText().toString();
+                String judulKey = ((TextView) v.findViewById(R.id.juduls)).getText().toString();
+                String namaAkunKey = ((TextView) v.findViewById(R.id.namaakuns)).getText().toString();
+                String kategoriKey = ((TextView) v.findViewById(R.id.kategoris)).getText().toString();
                 String photoAkunKey = dataModelArrayList.get(position).getPhotoURL();
                 String videoKey = dataModelArrayList.get(position).getVideoURL();
 
@@ -95,20 +95,20 @@ public class ListAdapters extends BaseAdapter {
         });
 
 
-        Picasso.get().load(dataModelArrayList.get(position).getThumbnailURL()).into(holder.imgThumbnail);
-        Picasso.get().load(dataModelArrayList.get(position).getPhotoURL()).into(holder.imgPhoto);
-        holder.tvjudul.setText(dataModelArrayList.get(position).getJudul());
-        holder.tvkategori.setText(dataModelArrayList.get(position).getKategori());
-        holder.tvnama.setText(dataModelArrayList.get(position).getNamaakun());
+        Picasso.get().load(dataModelArrayList.get(position).getThumbnailURL()).into(holder.imgThumbnail5);
+        Picasso.get().load(dataModelArrayList.get(position).getPhotoURL()).into(holder.imgPhoto5);
+        holder.tvjudul5.setText(dataModelArrayList.get(position).getJudul());
+        holder.tvkategori5.setText(dataModelArrayList.get(position).getKategori());
+        holder.tvnama5.setText(dataModelArrayList.get(position).getNamaakun());
 
         return convertView;
     }
 
     private class ViewHolder {
 
-        protected TextView tvjudul, tvnama, tvkategori;
-        protected ImageView imgPhoto,imgThumbnail;
-        protected LinearLayout home;
+        protected TextView tvjudul5, tvnama5, tvkategori5;
+        protected ImageView imgPhoto5,imgThumbnail5;
+        protected LinearLayout detail;
 
     }
 }

@@ -117,6 +117,7 @@ public class kategori extends AppCompatActivity {
                                 playerModel.setKategori(dataobj.getString("kategori"));
                                 playerModel.setThumbnailURL(dataobj.getString("thumbnail"));
                                 playerModel.setPhotoURL(dataobj.getString("photo"));
+                                playerModel.setVideoURL(dataobj.getString("video"));
 
                                 dataModelArrayList.add(playerModel);
 
@@ -169,6 +170,7 @@ public class kategori extends AppCompatActivity {
                                 playerModel.setKategori(dataobj.getString("kategori"));
                                 playerModel.setThumbnailURL(dataobj.getString("thumbnail"));
                                 playerModel.setPhotoURL(dataobj.getString("photo"));
+                                playerModel.setVideoURL(dataobj.getString("video"));
 
                                 dataModelArrayList.add(playerModel);
 
@@ -221,6 +223,7 @@ public class kategori extends AppCompatActivity {
                                 playerModel.setKategori(dataobj.getString("kategori"));
                                 playerModel.setThumbnailURL(dataobj.getString("thumbnail"));
                                 playerModel.setPhotoURL(dataobj.getString("photo"));
+                                playerModel.setVideoURL(dataobj.getString("video"));
 
                                 dataModelArrayList.add(playerModel);
 
@@ -273,6 +276,7 @@ public class kategori extends AppCompatActivity {
                                 playerModel.setKategori(dataobj.getString("kategori"));
                                 playerModel.setThumbnailURL(dataobj.getString("thumbnail"));
                                 playerModel.setPhotoURL(dataobj.getString("photo"));
+                                playerModel.setVideoURL(dataobj.getString("video"));
 
                                 dataModelArrayList.add(playerModel);
 
@@ -327,6 +331,7 @@ public class kategori extends AppCompatActivity {
                                 playerModel.setKategori(dataobj.getString("kategori"));
                                 playerModel.setThumbnailURL(dataobj.getString("thumbnail"));
                                 playerModel.setPhotoURL(dataobj.getString("photo"));
+                                playerModel.setVideoURL(dataobj.getString("video"));
 
                                 dataModelArrayList.add(playerModel);
 

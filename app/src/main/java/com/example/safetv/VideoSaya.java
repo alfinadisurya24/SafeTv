@@ -49,7 +49,7 @@ public class VideoSaya extends AppCompatActivity {
         setContentView(R.layout.activity_video_saya);
 
         listView2 = findViewById(R.id.listview2);
-        deleteVideoSaya = findViewById(R.id.deleteVIdeoSaya);
+//        deleteVideoSaya = findViewById(R.id.deleteVIdeoSaya);
         sessionManager = new SessionManager(this);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
@@ -66,7 +66,9 @@ public class VideoSaya extends AppCompatActivity {
 
     }
 
-    private void deleteVideo() {
+
+
+    private void deleteVideo(final String id) {
         class deleteVideo extends AsyncTask<Void,Void,String> {
             ProgressDialog loading;
 
@@ -80,7 +82,7 @@ public class VideoSaya extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 loading.dismiss();
-                Toast.makeText(VideoSaya.this, s, Toast.LENGTH_LONG).show();
+                Toast.makeText(VideoSaya.this, "Berhasil Menghapus", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -103,7 +105,7 @@ public class VideoSaya extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        deleteVideo();
+                        deleteVideo(id);
                     }
                 });
 
@@ -183,7 +185,7 @@ public class VideoSaya extends AppCompatActivity {
     }
 
     private void setupListview(){
-        listAdapter2 = new ListAdapters1(this, dataModelArrayList2);
+        listAdapter2 = new ListAdapterViSaya(this, dataModelArrayList2);
         listView2.setAdapter(listAdapter2);
     }
 }

@@ -37,13 +37,13 @@
             android:textSize="13dp"
             android:text="Judul"
             android:textColor="@color/black"/>
-        <ImageView
-            android:id="@+id/deleteVIdeoSaya"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_toRightOf="@id/juduls2"
-            android:layout_marginTop="80dp"
-            android:src="@mipmap/trash"/>
+        <!--<ImageView-->
+            <!--android:id="@+id/deleteVIdeoSaya"-->
+            <!--android:layout_width="25dp"-->
+            <!--android:layout_height="25dp"-->
+            <!--android:layout_toRightOf="@id/juduls2"-->
+            <!--android:layout_marginTop="80dp"-->
+            <!--android:src="@mipmap/trash"/>-->
         <TextView
             android:id="@+id/namaakuns2"
             android:layout_width="100dp"

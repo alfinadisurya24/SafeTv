@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/thumbnails"
             android:layout_width="150dp"
-            android:layout_height="110dp"
+            android:layout_height="90dp"
             android:scaleType="fitXY"
             android:src="@drawable/oreki" />
         <de.hdodenhof.circleimageview.CircleImageView
@@ -33,7 +33,7 @@
             android:layout_height="40dp"
             android:layout_toRightOf="@+id/photo_akuns"
             android:layout_marginTop="10dp"
-            android:textSize="18dp"
+            android:textSize="15dp"
             android:text="Judul"
             android:textColor="@color/black"/>
         <TextView
@@ -42,8 +42,18 @@
             android:layout_height="20dp"
             android:layout_toRightOf="@+id/photo_akuns"
             android:layout_below="@+id/juduls"
-            android:layout_marginTop="5dp"
-            android:textSize="13dp"
+            android:layout_marginTop="10dp"
+            android:textSize="10dp"
+            android:text="Nama Akun"
+            android:textColor="@color/colorPrimaryDark"/>
+        <TextView
+            android:id="@+id/kategoris"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_toRightOf="@+id/photo_akuns"
+            android:layout_below="@+id/namaakuns"
+            android:layout_marginTop="-5dp"
+            android:textSize="10dp"
             android:text="Nama Akun"
             android:textColor="@color/colorPrimaryDark"/>
 
