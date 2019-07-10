@@ -17,6 +17,7 @@
         if ($row = mysqli_fetch_assoc($response)) {
             $h['nama']  = $row['nama'];
             $h['email']  = $row['email'];
+            $h['photo']  = $row['photo'];
 
             array_push($result['read'], $h);
 

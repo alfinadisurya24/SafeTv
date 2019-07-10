@@ -1,27 +1,15 @@
 <?php  
- require_once 'connect.php';
-	
-
- $sql = "SELECT * FROM user;";
- 
- 
- $r = mysqli_query($conn,$sql);
- 
- 
- $result = array();
- 
- while($row=mysqli_fetch_array($r)){
-     
-     array_push($result,array(
-     "id"=>$row['id'],
-     "photo"=>$row['photo']
-     ));
-     
- }
- 
- 
- 
- echo json_encode(array('result'=>$result));
- 
- mysqli_close($conn);
+ if($_SERVER['REQUEST_METHOD']=='POST'){
+    $file_name = $_FILES['myFile']['name'];
+    $file_size = $_FILES['myFile']['size'];
+    $file_type = $_FILES['myFile']['type'];
+    $temp_name = $_FILES['myFile']['tmp_name'];
+            
+    $location = "video/";
+        
+    move_uploaded_file($temp_name, $location.$file_name);
+    echo "http://192.168.5.31/safetv/video/".$file_name;
+}else{
+    echo "Error"; 
+}
 ?>

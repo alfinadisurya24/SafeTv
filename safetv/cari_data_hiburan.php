@@ -1,11 +1,12 @@
 <?php 
-
-    require_once 'connect.php';
+	require_once 'connect.php';
 	
+
+    $keyword = $_POST['keyword'];
 
 	$sql = "SELECT video_user.id,video_user.judul,video_user.kategori,video_user.thumbnail,video_user.video, user.nama, user.photo
             FROM video_user
-            INNER JOIN user ON video_user.user_id = user.id;";
+            INNER JOIN user ON video_user.user_id = user.id WHERE video_user.judul LIKE '%".$keyword."%' AND video_user.kategori = 'hiburan';";
 	
 	
 	$r = mysqli_query($conn,$sql);
@@ -26,11 +27,8 @@
 		));
 		
 	}
-	
-	
-	
+
 	echo json_encode(array('result'=>$result));
 	
 	mysqli_close($conn);
-
 ?>

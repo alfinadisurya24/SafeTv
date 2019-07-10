@@ -15,7 +15,7 @@
     $path =  "thumbnail/$judul.jpeg";
     $finalPath = "http://192.168.5.31/safetv/".$path; 
 
-    $path1 =  "video/";
+    $path1 =  "video/$file_name.mp4";
     $finalPath1 = "http://192.168.5.31/safetv/".$path1; 
 
     require_once 'connect.php';
@@ -23,7 +23,8 @@
     $sql = "INSERT INTO video_user (judul, kategori, thumbnail, video, user_id) VALUES ('$judul', '$kategori', '$finalPath', '$finalPath1', '$user_id')";
 
     if (mysqli_query($conn, $sql)) {
-        if (file_put_contents($path, base64_decode($thumbnail)) && file_put_contents($finalPath, $path.$file_name)) {
+        if (file_put_contents($path, base64_decode($thumbnail)) && file_put_contents($path1, base64_decode($video))) {
+            
         $result["success"] = "1";
         $result["message"] = "success";
 

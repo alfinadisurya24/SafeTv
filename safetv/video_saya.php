@@ -1,11 +1,13 @@
 <?php 
 
     require_once 'connect.php';
+
+    $id = $_POST['user_id'];
 	
 
-	$sql = "SELECT video_user.id,video_user.judul,video_user.kategori,video_user.thumbnail,video_user.video, user.nama, user.photo
+	$sql = "SELECT video_user.id,video_user.judul,video_user.kategori,video_user.thumbnail, user.nama, user.photo
             FROM video_user
-            INNER JOIN user ON video_user.user_id = user.id;";
+            INNER JOIN user ON video_user.user_id = user.id WHERE user.id ='$id';";
 	
 	
 	$r = mysqli_query($conn,$sql);
@@ -21,8 +23,7 @@
 		"kategori"=>$row['kategori'],
         "thumbnail"=>$row['thumbnail'],
         "nama"=>$row['nama'],
-		"photo"=>$row['photo'],
-		"video"=>$row['video']
+        "photo"=>$row['photo']
 		));
 		
 	}
