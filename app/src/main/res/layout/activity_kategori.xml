@@ -14,6 +14,7 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/header"/>
     <EditText
+        android:id="@+id/pencarians"
         android:layout_width="300dp"
         android:layout_height="30dp"
         android:layout_marginTop="-100dp"

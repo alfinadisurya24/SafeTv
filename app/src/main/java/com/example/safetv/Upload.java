@@ -14,7 +14,7 @@ import java.net.URL;
 
 public class Upload {
 
-    public static final String UPLOAD_VIDEO_URL= "http://192.168.5.31/safetv/upload_video.php";
+    public static final String UPLOAD_VIDEO_URL= "http://192.168.5.31/safetv/photo_profil.php";
 
     private int serverResponseCode;
 

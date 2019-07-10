@@ -7,26 +7,22 @@
     tools:context=".Riwayat"
     android:orientation="vertical">
 
-    <Button
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/riwayat"/>
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Choose File"
-        android:id="@+id/buttonChoose" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Upload"
-        android:id="@+id/buttonUpload" />
-
-    <TextView
-        android:id="@+id/textViewResponse"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="10dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/square"/>
+    <ListView
+        android:id="@+id/listview7"
+        android:layout_width="430dp"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"></ListView>
 
 </LinearLayout>

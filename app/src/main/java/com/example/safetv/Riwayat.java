@@ -10,110 +10,122 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Riwayat extends AppCompatActivity implements View.OnClickListener {
-    Button buttonChoose, buttonUpload;
-    TextView textView, textViewResponse;
-    private static final int SELECT_VIDEO = 3;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
-    private String selectedPath;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Riwayat extends AppCompatActivity {
+
+    private static String URLstring = "http://192.168.5.31/safetv/tampil_riwayat.php";
+    private ListView listView7;
+    ArrayList<DataModel> dataModelArrayList2;
+    private ListAdapter listAdapter2;
+    private SessionManager sessionManager;
+    private ImageView deletes;
+    String getId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_riwayat);
 
-        buttonChoose = (Button) findViewById(R.id.buttonChoose);
-        buttonUpload = (Button) findViewById(R.id.buttonUpload);
+        listView7 = findViewById(R.id.listview7);
 
-        textView = (TextView) findViewById(R.id.textView);
-        textViewResponse = (TextView) findViewById(R.id.textViewResponse);
+        sessionManager = new SessionManager(this);
 
-        buttonChoose.setOnClickListener(this);
-        buttonUpload.setOnClickListener(this);
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        getId = user.get(sessionManager.ID);
 
+//        deletes = findViewById(R.id.deleteVIdeoSaya);
+//        deletes.setVisibility(View.GONE);
 
+        retrieveJSON();
 
     }
 
+    private void retrieveJSON() {
 
-    private void chooseVideo() {
-        Intent intent = new Intent();
-        intent.setType("video/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select a Video "), SELECT_VIDEO);
-    }
+        StringRequest stringRequest6 = new StringRequest(Request.Method.POST, URLstring,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == SELECT_VIDEO) {
-                System.out.println("SELECT_VIDEO");
-                Uri selectedImageUri = data.getData();
-                selectedPath = getPath(selectedImageUri);
-                textView.setText(selectedPath);
-            }
-        }
-    }
+                        Log.d("strrrrr", ">>" + response);
 
-    public String getPath(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        String document_id = cursor.getString(0);
-        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
-        cursor.close();
+                        try {
 
-        cursor = getContentResolver().query(
-                android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
-        cursor.close();
+                            JSONObject obj = new JSONObject(response);
+                            dataModelArrayList2 = new ArrayList<>();
+                            JSONArray dataArray  = obj.getJSONArray("result");
 
-        return path;
-    }
+                            for (int i = 0; i < dataArray.length(); i++) {
 
-    private void uploadVideo() {
-        class UploadVideo extends AsyncTask<Void, Void, String> {
+                                DataModel playerModel = new DataModel();
+                                JSONObject dataobj = dataArray.getJSONObject(i);
 
-            ProgressDialog uploading;
+                                playerModel.setID(dataobj.getString("id_history"));
+                                playerModel.setJudul(dataobj.getString("judul"));
+                                playerModel.setNamaakun(dataobj.getString("nama"));
+                                playerModel.setKategori(dataobj.getString("kategori"));
+                                playerModel.setThumbnailURL(dataobj.getString("thumbnail"));
+                                playerModel.setPhotoURL(dataobj.getString("photo"));
 
+                                dataModelArrayList2.add(playerModel);
+                                setupListview();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+        {
             @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                uploading = ProgressDialog.show(Riwayat.this, "Uploading File", "Please wait...", false, false);
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("user_id", getId);
+                return params;
             }
+        };
+        RequestQueue requestQueue2 = Volley.newRequestQueue(this);
 
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                uploading.dismiss();
-                textViewResponse.setText(Html.fromHtml("<b>Uploaded at <a href='" + s + "'>" + s + "</a></b>"));
-                textViewResponse.setMovementMethod(LinkMovementMethod.getInstance());
-            }
+        requestQueue2.add(stringRequest6);
 
-            @Override
-            protected String doInBackground(Void... params) {
-                Upload u = new Upload();
-                String msg = u.uploadVideo(selectedPath);
-                return msg;
-            }
-        }
-        UploadVideo uv = new UploadVideo();
-        uv.execute();
+
+    }
+    private void setupListview(){
+        listAdapter2 = new ListAdapterRiwayat(this, dataModelArrayList2);
+        listView7.setAdapter(listAdapter2);
     }
 
-
-    @Override
-    public void onClick(View v) {
-        if (v == buttonChoose) {
-            chooseVideo();
-        }
-        if (v == buttonUpload) {
-            uploadVideo();
-        }
-    }
 }

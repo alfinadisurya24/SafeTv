@@ -120,7 +120,7 @@ public class Detail extends AppCompatActivity {
 
                                 DataModel playerModel = new DataModel();
                                 JSONObject dataobj = dataArray.getJSONObject(i);
-
+                                playerModel.setID(dataobj.getString("id"));
                                 playerModel.setJudul(dataobj.getString("judul"));
                                 playerModel.setNamaakun(dataobj.getString("nama"));
                                 playerModel.setKategori(dataobj.getString("kategori"));

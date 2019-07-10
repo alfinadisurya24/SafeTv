@@ -9,8 +9,19 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ListAdapters1 extends BaseAdapter {
     private Context context;
@@ -89,6 +100,7 @@ public class ListAdapters1 extends BaseAdapter {
             }
         });
 
+
         Picasso.get().load(dataModelArrayList.get(position).getThumbnailURL()).into(holder.imgThumbnail2);
         Picasso.get().load(dataModelArrayList.get(position).getPhotoURL()).into(holder.imgPhoto2);
         holder.tvjudul2.setText(dataModelArrayList.get(position).getJudul());
@@ -104,4 +116,5 @@ public class ListAdapters1 extends BaseAdapter {
         protected ImageView imgPhoto2,imgThumbnail2;
         protected LinearLayout home;
     }
+
 }

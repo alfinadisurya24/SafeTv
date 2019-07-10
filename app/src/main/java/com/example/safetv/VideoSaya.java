@@ -39,9 +39,8 @@ public class VideoSaya extends AppCompatActivity {
     ArrayList<DataModel> dataModelArrayList2;
     private ListAdapter listAdapter2;
     private SessionManager sessionManager;
-    private ImageView deleteVideoSaya;
+    private ImageView deletes1;
     String getId;
-    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,6 @@ public class VideoSaya extends AppCompatActivity {
         setContentView(R.layout.activity_video_saya);
 
         listView2 = findViewById(R.id.listview2);
-//        deleteVideoSaya = findViewById(R.id.deleteVIdeoSaya);
         sessionManager = new SessionManager(this);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
@@ -57,68 +55,6 @@ public class VideoSaya extends AppCompatActivity {
 
         retrieveJSON();
 
-        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                confirmDeleteVideo();
-            }
-        });
-
-    }
-
-
-
-    private void deleteVideo(final String id) {
-        class deleteVideo extends AsyncTask<Void,Void,String> {
-            ProgressDialog loading;
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(VideoSaya.this, "Updating...", "Tunggu...", false, false);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                Toast.makeText(VideoSaya.this, "Berhasil Menghapus", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                RequestHandler rh = new RequestHandler();
-                String s = rh.sendGetRequestParam(URLDelete, id);
-                return s;
-            }
-        }
-
-        deleteVideo de = new deleteVideo();
-        de.execute();
-    }
-
-    private void confirmDeleteVideo(){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Apakah Kamu Yakin Ingin Menghapus Pegawai ini?");
-
-        alertDialogBuilder.setPositiveButton("Ya",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        deleteVideo(id);
-                    }
-                });
-
-        alertDialogBuilder.setNegativeButton("Tidak",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-
-                    }
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 
     private void retrieveJSON() {
@@ -140,7 +76,7 @@ public class VideoSaya extends AppCompatActivity {
 
                                 DataModel playerModel = new DataModel();
                                 JSONObject dataobj = dataArray.getJSONObject(i);
-
+                                playerModel.setID(dataobj.getString("id"));
                                 playerModel.setJudul(dataobj.getString("judul"));
                                 playerModel.setNamaakun(dataobj.getString("nama"));
                                 playerModel.setKategori(dataobj.getString("kategori"));

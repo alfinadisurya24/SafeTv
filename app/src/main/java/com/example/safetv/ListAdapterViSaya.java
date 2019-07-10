@@ -7,12 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ListAdapterViSaya extends BaseAdapter {
 
@@ -52,7 +61,7 @@ public class ListAdapterViSaya extends BaseAdapter {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-            ListAdapterViSaya.ViewHolder holder;
+            final ListAdapterViSaya.ViewHolder holder;
 
         if (convertView == null) {
             holder = new ListAdapterViSaya.ViewHolder();
@@ -65,7 +74,7 @@ public class ListAdapterViSaya extends BaseAdapter {
             holder.tvjudul2 = (TextView) convertView.findViewById(R.id.juduls2);
             holder.tvnama2 = (TextView) convertView.findViewById(R.id.namaakuns2);
             holder.tvkategori2 = (TextView) convertView.findViewById(R.id.kategori2);
-//            holder.deletes = (ImageView) convertView.findViewById(R.id.deleteVIdeoSaya);
+            holder.deletes = (ImageView) convertView.findViewById(R.id.deleteVIdeoSaya);
 
             convertView.setTag(holder);
         }else {
@@ -73,12 +82,14 @@ public class ListAdapterViSaya extends BaseAdapter {
             holder = (ListAdapterViSaya.ViewHolder)convertView.getTag();
         }
 
-//        holder.deletes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        holder.deletes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String video_saya_id = dataModelArrayList.get(position).getID();
+                deleteVideo(video_saya_id);
+                context.startActivity(new Intent(context.getApplicationContext(),Saya.class));
+            }
+        });
 
         Picasso.get().load(dataModelArrayList.get(position).getThumbnailURL()).into(holder.imgThumbnail2);
         Picasso.get().load(dataModelArrayList.get(position).getPhotoURL()).into(holder.imgPhoto2);
@@ -94,4 +105,38 @@ public class ListAdapterViSaya extends BaseAdapter {
             protected TextView tvjudul2, tvnama2, tvkategori2;
             protected ImageView imgPhoto2,imgThumbnail2,deletes;
         }
+
+
+
+    private void deleteVideo(final String getIdVideoSaya) {
+
+
+        String URL = "http://192.168.5.31/safetv/delete_video_saya.php";
+
+        StringRequest stringRequest9 = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(context, "Berhasil Menghapus Video", Toast.LENGTH_SHORT).show();
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Error"+ error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params =  new HashMap<>();
+                params.put("id", getIdVideoSaya);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+        requestQueue.add(stringRequest9);
+    }
 }
+
+

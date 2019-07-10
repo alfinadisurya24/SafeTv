@@ -13,9 +13,18 @@ import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ListAdapter2 extends BaseAdapter {
     private Context context;
@@ -84,6 +93,9 @@ public class ListAdapter2 extends BaseAdapter {
                 String kategoriKey = ((TextView) v.findViewById(R.id.kategoris)).getText().toString();
                 String photoAkunKey = dataModelArrayList.get(position).getPhotoURL();
                 String videoKey = dataModelArrayList.get(position).getVideoURL();
+                String video_user_id = dataModelArrayList.get(position).getID();
+
+                riwayat2(video_user_id);
 
                 i.putExtra("JUDUL_KEY", judulKey);
                 i.putExtra("NAMA_AKUN_KEY", namaAkunKey);
@@ -110,5 +122,41 @@ public class ListAdapter2 extends BaseAdapter {
         protected ImageView imgPhoto5,imgThumbnail5;
         protected LinearLayout detail;
 
+    }
+    private SessionManager sessionManager;
+    String getId;
+
+    private void riwayat2(final String videoUid){
+
+        sessionManager = new SessionManager(context.getApplicationContext());
+
+        HashMap<String, String> user = sessionManager.getUserDetail();
+        getId = user.get(sessionManager.ID);
+
+        String URL = "http://192.168.5.31/safetv/riwayat.php";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                })
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params =  new HashMap<>();
+                params.put("video_user_id", videoUid);
+                params.put("user_id", getId);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(context.getApplicationContext());
+        requestQueue.add(stringRequest);
     }
 }
