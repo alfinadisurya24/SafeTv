@@ -26,7 +26,7 @@ import java.util.Map;
 public class Login extends AppCompatActivity {
     private ImageView daftar, masuk;
     private EditText email,password;
-    private static String url_login = "http://192.168.5.31/safetv/login.php";
+    private static String url_login = "http://"+Konfigurasi.IP+"/safetv/login.php";
     SessionManager sessionManager;
 
     @Override

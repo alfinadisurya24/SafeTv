@@ -121,7 +121,7 @@ public class ListAdapterRiwayat extends BaseAdapter {
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(sessionManager.ID);
 
-        String URL = "http://192.168.5.31/safetv/riwayat.php";
+        String URL = "http://"+Konfigurasi.IP+"/safetv/riwayat.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
@@ -151,7 +151,7 @@ public class ListAdapterRiwayat extends BaseAdapter {
     private void deleteRiwayat(final String getIdRiwayat) {
 
 
-        String URL2 = "http://192.168.5.31/safetv/delete_riwayat.php";
+        String URL2 = "http://"+Konfigurasi.IP+"/safetv/delete_riwayat.php";
 
         StringRequest stringRequest90 = new StringRequest(Request.Method.POST, URL2, new Response.Listener<String>() {
             @Override

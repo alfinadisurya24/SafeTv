@@ -45,8 +45,8 @@ public class Home extends AppCompatActivity  {
     private ImageView saya,kategori;
     private SessionManager sessionManager;
     private EditText pencarianet;
-    private static String URLstring = "http://192.168.5.31/safetv/tampilan_home.php";
-    private static String URLstring3 = "http://192.168.5.31/safetv/cari_data.php";
+    private static String URLstring = "http://"+Konfigurasi.IP+"/safetv/tampilan_home.php";
+    private static String URLstring3 = "http://"+Konfigurasi.IP+"/safetv/cari_data.php";
     private ListView listView;
     ArrayList<DataModel> dataModelArrayList;
     private ListAdapter listAdapter;

@@ -33,13 +33,12 @@ import java.util.Map;
 
 public class VideoSaya extends AppCompatActivity {
 
-    private static String URLstring = "http://192.168.5.31/safetv/video_saya.php";
-    private static String URLDelete = "http://192.168.5.31/safetv/delete_video_saya.php";
+    private static String URLstring = "http://"+Konfigurasi.IP+"/safetv/video_saya.php";
+    private static String URLDelete = "http://"+Konfigurasi.IP+"/safetv/delete_video_saya.php";
     private ListView listView2;
     ArrayList<DataModel> dataModelArrayList2;
     private ListAdapter listAdapter2;
     private SessionManager sessionManager;
-    private ImageView deletes1;
     String getId;
 
     @Override

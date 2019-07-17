@@ -1,8 +1,8 @@
 package com.example.safetv;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,25 +22,35 @@ import android.widget.Toast;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Unggah extends AppCompatActivity {
 
-    private static String URL_UPLOADS = "http://192.168.5.31/safetv/upload_video.php";
+    private static String URL_UPLOADS = "http://"+Konfigurasi.IP+"/safetv/upload_video.php";
     private static final int IMAGE_REQUEST=2;
-    private static final int VIDEO_REQUEST=1;
+    private static final int PICK_FILE_REQUEST=1;
+    private static final String TAG = Unggah.class.getSimpleName();
     private RadioGroup radioGroup;
     private RadioButton radioButton;
     private EditText editjudul;
-    private TextView textView,tvid;
+    private TextView textView;
     private ImageView upload,thumbnail,video,img_thumbnail;
     private Bitmap bitmap;
     private Uri filePath;
-    private String selectedPath;
+    private String selectedFilePath;
     public static final String UPLOAD_KEY = "thumbnail";
     SessionManager sessionManager;
     String getId;
+    ProgressDialog dialog;
 
 
 
@@ -56,8 +67,8 @@ public class Unggah extends AppCompatActivity {
         upload = findViewById(R.id.upload);
         editjudul = findViewById(R.id.etjudul);
         textView = findViewById(R.id.textView);
-        tvid = findViewById(R.id.tvid);
         video = findViewById(R.id.c_video);
+//        namafile = findViewById(R.id.namafile);
 
         HashMap<String, String> user = sessionManager.getUserDetail();
         getId = user.get(sessionManager.ID);
@@ -78,7 +89,18 @@ public class Unggah extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UploadThumbnail();
-                uploadVideo();
+                if(selectedFilePath != null){
+                    dialog = ProgressDialog.show(Unggah.this,"","Uploading File...",true);
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            uploadFile(selectedFilePath);
+                        }
+                    }).start();
+                }else{
+                    Toast.makeText(Unggah.this,"Please choose a File First",Toast.LENGTH_SHORT).show();
+                }
                 startActivity(new Intent(Unggah.this, Saya.class));
             }
         });
@@ -103,7 +125,7 @@ public class Unggah extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setType("video/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select a Video "), VIDEO_REQUEST);
+        startActivityForResult(Intent.createChooser(intent,"Choose File to Upload.."),PICK_FILE_REQUEST);
     }
 
     @Override
@@ -119,30 +141,23 @@ public class Unggah extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        else if (resultCode == RESULT_OK && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            if (requestCode == VIDEO_REQUEST) {
-                Uri selectedImageUri = data.getData();
-                selectedPath = getPath(selectedImageUri);
-                textView.setText(selectedPath);
+        else if (resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            if (requestCode == PICK_FILE_REQUEST) {
+                Uri selectedFileUri = data.getData();
+                selectedFilePath = FilePath.getPath(this,selectedFileUri);
+                Log.i(TAG,"Selected File Path:" + selectedFilePath);
+
+                String[] parts = selectedFilePath.split("/");
+                final String fileName = parts[parts.length-1];
+
+                if(selectedFilePath != null && !selectedFilePath.equals("")){
+                    textView.setText(fileName);
+
+                }else{
+                    Toast.makeText(this,"Cannot upload file to server",Toast.LENGTH_SHORT).show();
+                }
             }
         }
-    }
-
-    public String getPath(Uri uri) {
-        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        String document_id = cursor.getString(0);
-        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
-        cursor.close();
-
-        cursor = getContentResolver().query(
-                android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
-        cursor.close();
-
-        return path;
     }
 
     private void UploadThumbnail(){
@@ -171,7 +186,6 @@ public class Unggah extends AppCompatActivity {
                 Bitmap bitmap = params[0];
                 String thumbnail = getStringImage(bitmap);
 
-
                 HashMap<String,String> data = new HashMap<>();
 
                 int radioId = radioGroup.getCheckedRadioButtonId();
@@ -179,6 +193,7 @@ public class Unggah extends AppCompatActivity {
                 data.put("user_id", user_id);
                 data.put("kategori", radioButton.getText().toString().trim());
                 data.put("judul", editjudul.getText().toString().trim());
+                data.put("namafile", textView.getText().toString().trim());
                 data.put(UPLOAD_KEY, thumbnail);
                 String result = rh.sendPostRequest(URL_UPLOADS,data);
 
@@ -190,30 +205,110 @@ public class Unggah extends AppCompatActivity {
 
     }
 
-    private void uploadVideo(){
-        class UploadVideo extends AsyncTask<Void, Void, String> {
+    public int uploadFile(final String selectedFilePath){
 
-            ProgressDialog uploading;
+        int serverResponseCode = 0;
 
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                uploading = ProgressDialog.show(Unggah.this, "Uploading File", "Please wait...", false, false);
+        HttpURLConnection connection;
+        DataOutputStream dataOutputStream;
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
+
+
+        int bytesRead,bytesAvailable,bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1 * 1024 * 1024;
+        File selectedFile = new File(selectedFilePath);
+
+
+        String[] parts = selectedFilePath.split("/");
+        final String fileName = parts[parts.length-1];
+
+        if (!selectedFile.isFile()){
+            dialog.dismiss();
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    textView.setText("Source File Doesn't Exist: " + selectedFilePath);
+                }
+            });
+            return 0;
+        }else{
+            try{
+                FileInputStream fileInputStream = new FileInputStream(selectedFile);
+                URL url = new URL(URL_UPLOADS);
+                connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setUseCaches(false);
+                connection.setChunkedStreamingMode(1024);
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Connection", "Keep-Alive");
+                connection.setRequestProperty("ENCTYPE", "multipart/form-data");
+                connection.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                connection.setRequestProperty("uploaded_file",selectedFilePath);
+
+                dataOutputStream = new DataOutputStream(connection.getOutputStream());
+                dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+                dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
+                        + selectedFilePath + "\"" + lineEnd);
+                dataOutputStream.writeBytes(lineEnd);
+
+                bytesAvailable = fileInputStream.available();
+                bufferSize = Math.min(bytesAvailable,maxBufferSize);
+                buffer = new byte[bufferSize];
+
+                bytesRead = fileInputStream.read(buffer,0,bufferSize);
+
+                while (bytesRead > 0){
+                    dataOutputStream.write(buffer,0,bufferSize);
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable,maxBufferSize);
+                    bytesRead = fileInputStream.read(buffer,0,bufferSize);
+                }
+
+                dataOutputStream.writeBytes(lineEnd);
+                dataOutputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                serverResponseCode = connection.getResponseCode();
+                String serverResponseMessage = connection.getResponseMessage();
+
+                Log.i(TAG, "Server Response is: " + serverResponseMessage + ": " + serverResponseCode);
+
+                if(serverResponseCode == 200){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            textView.setText(fileName);
+                        }
+                    });
+                }
+                fileInputStream.close();
+                dataOutputStream.flush();
+                dataOutputStream.close();
+
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(Unggah.this,"File Not Found",Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+                Toast.makeText(Unggah.this, "URL error!", Toast.LENGTH_SHORT).show();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(Unggah.this, "Cannot Read/Write File!", Toast.LENGTH_SHORT).show();
             }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                uploading.dismiss();
-                Toast.makeText(Unggah.this, "Sukses", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                Upload u = new Upload();
-                String msg = u.uploadVideo(selectedPath);
-                return msg;
-            }
+            dialog.dismiss();
+            return serverResponseCode;
         }
     }
 
@@ -226,6 +321,5 @@ public class Unggah extends AppCompatActivity {
 
         return encodeImage;
     }
-
 
 }

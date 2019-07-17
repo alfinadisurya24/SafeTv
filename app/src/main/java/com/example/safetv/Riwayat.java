@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class Riwayat extends AppCompatActivity {
 
-    private static String URLstring = "http://192.168.5.31/safetv/tampil_riwayat.php";
+    private static String URLstring = "http://"+Konfigurasi.IP+"/safetv/tampil_riwayat.php";
     private ListView listView7;
     ArrayList<DataModel> dataModelArrayList2;
     private ListAdapter listAdapter2;

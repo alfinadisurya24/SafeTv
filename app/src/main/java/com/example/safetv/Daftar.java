@@ -28,7 +28,7 @@ public class Daftar extends AppCompatActivity {
     private ImageView daftar;
     private EditText password,email,nama;
     private ProgressBar loading;
-    private static String URL = "http://192.168.5.31/safetv/daftar.php";
+    private static String URL = "http://"+Konfigurasi.IP+"/safetv/daftar.php";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -33,16 +34,17 @@ public class kategori extends AppCompatActivity {
 
     private ImageView video,saya,goolahraga,gomotivasi,gowawasan,gohiburan;
     private EditText pencarianet2;
-    private static String URLstring = "http://192.168.5.31/safetv/tampilan_kategori_olahraga.php";
-    private static String URLstring1 = "http://192.168.5.31/safetv/tampilan_kategori_wawasan.php";
-    private static String URLstring2 = "http://192.168.5.31/safetv/tampilan_kategori_motivasi.php";
-    private static String URLstring3 = "http://192.168.5.31/safetv/tampilan_kategori_hiburan.php";
-    private static String URLstring4 = "http://192.168.5.31/safetv/tampilan_home.php";
-    private static String URLstring9 = "http://192.168.5.31/safetv/cari_data.php";
-    private static String URLstring5 = "http://192.168.5.31/safetv/cari_data_olahraga.php";
-    private static String URLstring6 = "http://192.168.5.31/safetv/cari_data_motivasi.php";
-    private static String URLstring7 = "http://192.168.5.31/safetv/cari_data_wawasan.php";
-    private static String URLstring8 = "http://192.168.5.31/safetv/cari_data_hiburan.php";
+    private TextView kategorip;
+    private static String URLstring = "http://"+Konfigurasi.IP+"/safetv/tampilan_kategori_olahraga.php";
+    private static String URLstring1 = "http://"+Konfigurasi.IP+"/safetv/tampilan_kategori_wawasan.php";
+    private static String URLstring2 = "http://"+Konfigurasi.IP+"/safetv/tampilan_kategori_motivasi.php";
+    private static String URLstring3 = "http://"+Konfigurasi.IP+"/safetv/tampilan_kategori_hiburan.php";
+    private static String URLstring4 = "http://"+Konfigurasi.IP+"/safetv/tampilan_home.php";
+    private static String URLstring9 = "http://"+Konfigurasi.IP+"/safetv/cari_data.php";
+    private static String URLstring5 = "http://"+Konfigurasi.IP+"/safetv/cari_data_olahraga.php";
+    private static String URLstring6 = "http://"+Konfigurasi.IP+"/safetv/cari_data_motivasi.php";
+    private static String URLstring7 = "http://"+Konfigurasi.IP+"/safetv/cari_data_wawasan.php";
+    private static String URLstring8 = "http://"+Konfigurasi.IP+"/safetv/cari_data_hiburan.php";
     private ListView listView1;
     ArrayList<DataModel> dataModelArrayList;
     private ListAdapter listAdapter;
@@ -60,30 +62,10 @@ public class kategori extends AppCompatActivity {
         gowawasan = findViewById(R.id.goWawasan);
         listView1 = findViewById(R.id.listview1);
         pencarianet2 = findViewById(R.id.pencarians);
+        kategorip = findViewById(R.id.pilihkateg);
 
-        retrieveJSON();
-
-        pencarianet2.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().equals("")){
-                    retrieveJSON();
-                }
-                else {
-                    retrieveSearch();
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        listView1.setVisibility(View.GONE);
+        retrieveSearch();
 
         saya.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +85,8 @@ public class kategori extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tampilOlahraga();
+                listView1.setVisibility(View.VISIBLE);
+                kategorip.setVisibility(View.GONE);
                 pencarianet2.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -130,6 +114,8 @@ public class kategori extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tampilMotivasi();
+                listView1.setVisibility(View.VISIBLE);
+                kategorip.setVisibility(View.GONE);
                 pencarianet2.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -157,6 +143,8 @@ public class kategori extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tampilWawasan();
+                listView1.setVisibility(View.VISIBLE);
+                kategorip.setVisibility(View.GONE);
                 pencarianet2.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -184,6 +172,8 @@ public class kategori extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 tampilHiburan();
+                listView1.setVisibility(View.VISIBLE);
+                kategorip.setVisibility(View.GONE);
                 pencarianet2.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {

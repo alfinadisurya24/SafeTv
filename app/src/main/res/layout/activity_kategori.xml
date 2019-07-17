@@ -75,12 +75,29 @@
             android:src="@drawable/hiburan"
             android:layout_marginLeft="15dp"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:id="@+id/pilihkateg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:paddingTop="245dp"
+            android:paddingBottom="245dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Pilih Kategori Diatas"/>
     <ListView
         android:id="@+id/listview1"
         android:layout_width="430dp"
         android:layout_gravity="center_horizontal"
         android:layout_height="525dp"
         android:layout_marginTop="10dp"></ListView>
+
+    </LinearLayout>
+
     <ImageView
         android:layout_width="500dp"
         android:layout_height="30dp"

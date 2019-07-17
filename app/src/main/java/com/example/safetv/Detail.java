@@ -37,7 +37,7 @@ public class Detail extends AppCompatActivity {
     private TextView tvjudul, tvnama_akun,tvkategori;
     private ImageView imgphoto;
     private ImageView saya, home;
-    private static String URLstring = "http://192.168.5.31/safetv/tampilan_home.php";
+    private static String URLstring = "http://"+Konfigurasi.IP+"/safetv/tampilan_home.php";
     protected VideoView tampilVideoDetail;
     private MediaController mediacontroller4;
     private Uri uri4;
@@ -59,7 +59,6 @@ public class Detail extends AppCompatActivity {
 
         mediacontroller4 = new MediaController(this);
         mediacontroller4.setAnchorView(tampilVideoDetail);
-//        uri4 = Uri.parse(video);
         tampilVideoDetail.setMediaController(mediacontroller4);
         tampilVideoDetail.setVideoPath(String.valueOf(video));
         tampilVideoDetail.requestFocus();

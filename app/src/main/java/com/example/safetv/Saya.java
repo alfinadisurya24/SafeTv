@@ -43,9 +43,9 @@ public class Saya extends AppCompatActivity {
     private ImageView unggah,logout,cuman,beranda,save,edit,riwayatgo,videoSayago;
     SessionManager sessionManager;
     String getId;
-    private static String URL_READ = "http://192.168.5.31/safetv/read_detail.php";
-    private static String URL_EDIT = "http://192.168.5.31/safetv/edit_detail.php";
-    private static String URL_UPLOAD = "http://192.168.5.31/safetv/upload_photo_profile.php";
+    private static String URL_READ = "http://"+Konfigurasi.IP+"/safetv/read_detail.php";
+    private static String URL_EDIT = "http://"+Konfigurasi.IP+"/safetv/edit_detail.php";
+    private static String URL_UPLOAD = "http://"+Konfigurasi.IP+"/safetv/upload_photo_profile.php";
     private Bitmap bitmap;
     CircleImageView profile_image;
 

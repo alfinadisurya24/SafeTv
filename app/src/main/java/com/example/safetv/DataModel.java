@@ -3,14 +3,6 @@ package com.example.safetv;
 public class DataModel {
     private String id,judul,kategori, thumbnailURL, namaakun,  photoURL, videoURL;
 
-//    public DataModel(){};
-//
-//    public DataModel(String judul,String thumbnailURL,String namaakun,String  photoURL){
-//        this.judul= judul;
-//        this.thumbnailURL= thumbnailURL;
-//        this.namaakun= namaakun;
-//        this.photoURL= photoURL;
-//    }
     public String getID() {
     return id;
 }

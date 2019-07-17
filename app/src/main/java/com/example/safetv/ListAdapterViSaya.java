@@ -111,7 +111,7 @@ public class ListAdapterViSaya extends BaseAdapter {
     private void deleteVideo(final String getIdVideoSaya) {
 
 
-        String URL = "http://192.168.5.31/safetv/delete_video_saya.php";
+        String URL = "http://"+Konfigurasi.IP+"/safetv/delete_video_saya.php";
 
         StringRequest stringRequest9 = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
